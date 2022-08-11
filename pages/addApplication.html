@@ -5,8 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AppCenter</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../fonts/css/bootstrap.min.css">
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
 </head>
 
@@ -20,7 +19,8 @@
         </div>
     </div>
 
-    <form name="appForm" class="needs-validiation" onsubmit="submit()" method="post" novalidate>
+    <form name="appForm" class="needs-validiation" novalidate>
+        
         <div class="container d-flex align-items-center justify-content-center" style="margin-bottom: 40px;">
             <div class="row">
                 <div class="row">
@@ -28,7 +28,7 @@
                         <label>App Name*:</label>
                     </div>
                     <div class="col-6">
-                        <input type="text" class="form-control" id="nameInput" placeholder="App name">
+                        <input type="text" class="form-control" id="nameInput" placeholder="App name" style="width: 300px;">
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                         <label>App Price*:</label>
                     </div>
                     <div class="col-6">
-                        <input type="text" class="form-control" id="priceInput" placeholder="App Price" required>
+                        <input type="text" class="form-control" id="priceInput" placeholder="App price in $" style="width: 300px;">
                     </div>
                 </div>
             </div>
@@ -54,7 +54,9 @@
                         <label>App Description:</label>
                     </div>
                     <div class="col-6">
-                        <input type="text" class="form-control" id="descriptionInput" placeholder="App Description" style="height: 100px;">
+                        <textarea rows="5" cols="20" id="descriptionInput" placeholder="App description" spellcheck="false" class="form-control" style="width: 300px;">
+                            
+                        </textarea>
                     </div>
                 </div>
             </div>
@@ -67,7 +69,7 @@
                         <label>Company name:</label>
                     </div>
                     <div class="col-6">
-                        <input type="text" class="form-control" id="companyInput" placeholder="Company name">
+                        <input type="text" class="form-control" id="companyInput" placeholder="Company name" style="width: 300px;">
                     </div>
                 </div>
             </div>
@@ -80,7 +82,7 @@
                         <label>Image URL:</label>
                     </div>
                     <div class="col-6">
-                        <input type="text" class="form-control" id="imageInput" placeholder="Image URL">
+                        <input type="text" class="form-control" id="imageInput" placeholder="Image URL" style="width: 300px;">
                     </div>
                 </div>
             </div>
@@ -95,10 +97,10 @@
                     <div class="col-6">
                         <div class="row">
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary" id="submitBtn">Publish Application</button>
+                                <input type="submit" class="btn btn-success" id="submitBtn" style="width: 200px;"></input>
                             </div>
                             <div>
-                                <p class="text-danger"></p>
+                                <p class="text-danger" id="invalidMessage"></p>
                             </div>
                         </div>
                     </div>

@@ -35,7 +35,7 @@ const showAllApps = (apps) => {
 }
 
 const createAppRow = (app) => {
-
+    debugger
     let appId = app.id
     let appURL = app.imageUrl
     let appName = app.name
@@ -69,11 +69,11 @@ const createAppRow = (app) => {
             <div class="col-9 float-right row">
 
                 <div class="col-12 text-left">
-                    <label>${appName}</label>
+                    <h3>${appName}</h3>
                 </div>
 
                 <div class="col-12 text-left">
-                    <label>${appDesc}</label>
+                    <h5>${appDesc}</h5>
                 </div>
 
                 <div class="col-12 text-left">
