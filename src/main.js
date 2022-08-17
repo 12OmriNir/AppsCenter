@@ -1,87 +1,87 @@
 const getData = () => {
-    if (localStorage.getItem('applications') == null) {
-        localStorage.setItem('applications', JSON.stringify(applications));
-        localStorage.setItem('id', id);
-    }
+  if (localStorage.getItem("applications") == null) {
+    localStorage.setItem("applications", JSON.stringify(applications));
+    localStorage.setItem("id", id);
+  }
+  return JSON.parse(localStorage.getItem("applications"));
+};
 
-    return JSON.parse(localStorage.getItem('applications'));
+const editFile = (data) => {
+    localStorage.setItem('applications', JSON.stringify(data))
 }
+
 let apps;
 document.addEventListener("DOMContentLoaded", () => {
-    apps = getData()
+  apps = getData();
+
+  showAllApps(apps);
+
+    document.getElementById("searchBar").addEventListener("input", (event) => {
+    const searched = event.target.value;
+
+    const filtered = apps.filter((app) => app.name.toLowerCase().includes(searched.toLowerCase()));
+
+    showAllApps(filtered);
+  });
 });
 
-window.onload = () => {
-
-    showAllApps(apps)
-
-    document.getElementById('searchBar').addEventListener('change', event => {
-
-        const searched = event.target.value
-
-        const filtered = apps.filter(app => app.name.includes(searched))
-
-        showAllApps(filtered)
-    })
-
-    document.getElementById('addButton').addEventListener('click',() => {
-        window.location.replace('addApplication.html')
-    })
-}
-
 const showAllApps = (apps) => {
-    const tag = apps.map(app => createAppRow(app)).join('')
-        document.getElementById('appsContainer').innerHTML = tag
-}
+  const tag = apps.map((app) => createAppRow(app)).join("");
+  document.getElementById("appsContainer").innerHTML = tag;
+};
 
-const createAppRow = (app) => {
-    debugger
-    let appId = app.id
-    let appURL = app.imageUrl
-    let appName = app.name
-    let appPrice = app.price
-    let appCompName = app.companyName
-    let appDesc = app.desc
+const createAppRow = ({id, imageUrl, name, price, desc, companyName}) => {
+  debugger
+  let imagePositon;
 
-    let imagePositon;
+  if (imageUrl === "") {
+    imagePositon = "../images/Help.png";
+  } else {
+    imagePositon = `../images/${id}/${imageUrl}`;
+  }
 
-    if(appURL === ''){
-        imagePositon = '../images/Help.png'
-    }
-    else{
-        imagePositon = `../images/${appId}/${appURL}`
-    }
+  if (companyName === "") {
+    comp = "This app does not have a company";
+  }
 
-    if(appCompName === ''){
-        appCompName = "This app does not have a company"
-    }
+  if (desc === "") {
+    desc = "This app does not have description";
+  }
 
-    if(appDesc === ''){
-        appDesc = "This app does not have description"
-    }
+  return `
+    <div class="col-3 float-left row">
+        <div class="col-12">
+            <img src="${imagePositon}" style="width: 100px">
+        </div>
+    </div>
 
-    return `<div class="col-3 float-left row">
-                <div class="col-12">
-                    <img src="${imagePositon}" style="width: 100px">
-                </div>
+    <div class="col-9 float-right row">
+        <div class="col-6 row">
+            <div class="col-12 text-left">
+                <h3>${name}</h3>
             </div>
+            <div class="col-12 text-left">
+                <h5>${desc}</h5>
+            </div>
+            <div class="col-12 text-left">
+                <label>${price}$</label>
+            </div>
+            <div class="col-12 text-left">
+                <label>${companyName}</label>
+            </div>
+        </div>
 
-            <div class="col-9 float-right row">
+        <div class="col-6 row">
+            <div class="col-12 text-center">
+                <button class="btn btn-danger" onClick ="deleteApp(${id})">Delete</button>
+            </div>
+        </div>
+    </div>`;
+};
 
-                <div class="col-12 text-left">
-                    <h3>${appName}</h3>
-                </div>
-
-                <div class="col-12 text-left">
-                    <h5>${appDesc}</h5>
-                </div>
-
-                <div class="col-12 text-left">
-                    <label>${appPrice}</label>
-                </div>
-
-                <div class="col-12 text-left">
-                    <label>${appCompName}</label>
-                </div>
-            </div>`
+const deleteApp = (id) => {
+    const index = apps.findIndex(app => parseInt(app.id) === id)
+    apps.splice(index,1)
+    editFile(apps)
+    showAllApps(apps)
 }
