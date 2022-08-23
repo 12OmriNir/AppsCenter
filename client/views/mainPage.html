@@ -1,0 +1,46 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppCenter</title>
+    <link rel="stylesheet" href=".../fonts/css/bootstrap.min.css">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link href="../styles/modal.css">
+</head>
+
+<body>
+    <header>
+        <div class="container d-flex align-items-center justify-content-center" style="margin-bottom: 40px;">
+            <div class="row">
+                <div class="col-12">
+                    <img src="../images/AppsCenter.png">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container d-flex align-items-center justify-content-center" style="margin-bottom: 40px;">
+        <div class="row">
+            <div class="col-10">
+                <form class="form-inline mt-2 mt-md-0">
+                    <input class="form-control inputdefault-4" type="search" placeholder="search" aria-label="Search" id="searchBar" style="width: 800px">
+                </form>
+            </div> 
+            <div class="col-2">
+                <a href="./addApplication.html">
+                    <button class="btn btn-success" id="addButton" style="width: 200px;">Publish Application</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container d-flex align-items-center justify-content-center">
+        <div class="row" id="appsContainer">
+
+        </div>
+    </div>
+    
+    <script src="../controllers/main.js" type="module"></script>
+</body>
+</html>
