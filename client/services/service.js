@@ -1,35 +1,54 @@
-import { getApps, editApps, getNextId } from "../server/server.js"
-
-const getAppsByName = (filter) => {
-    const filtered = getApps().filter(app => app.name.toUpperCase().includes(filter.toUpperCase()))
-    return filtered
+const getAppsByName = async(filter) => {
+    const response = await fetch(`http://localhost:3000/api/appsCenter/${filter}`, {method: "GET",headers: { "content-type": "application/json" }})
+    const data = await response.json()
+    return data
 }
 
-const getAllApps = () => {
-    return getApps();
+const getAllApps = async() => { 
+    try{
+        const response = await fetch("http://localhost:3000/api/appsCenter", {method: "GET",headers: { "content-type": "application/json" }})
+        const data = await response.json()
+        return data
+    }catch(e){
+        console.log('error', e)
+    }
 }
 
-const deleteApp = (id) => {
-    const apps = getApps()
-
-    const index = apps.findIndex(app => parseInt(app.id) === id)
-    apps.splice(index,1)
-    editApps(apps)
+const deleteApp = async(id) => {
+    try{
+        await fetch(`http://localhost:3000/api/appsCenter/${id}`, {method: "DELETE", redirect: 'follow'})
+    }catch(e){
+        console.log('error', e)
+    }
 }
 
-const addApp = (values) => {
-    const apps = getApps()
+const addApp = async(values) => {
+    console.log(values)
+    const myHeaders = new Headers();
+    myHeaders.append("content-Type", "application/json");
 
-    const app = {
-        id: getNextId(),
-        imageUrl: values[0],
+    const raw = JSON.stringify({
+        imgurl: values[0],
         name: values[1],
         price: values[2],
-        desc: values[3],
-        companyName: values[4]
+        description: values[3],
+        companyname: values[4]
+    })
+
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+    };
+
+
+    try{
+        await fetch('http://localhost:3000/api/appsCenter', requestOptions)
     }
-    apps.push(app);
-    editApps(apps)
+    catch(e){
+        console.log('error', e)
+    }
 }
 
 export {getAppsByName, getAllApps, deleteApp, addApp}

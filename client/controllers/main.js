@@ -1,43 +1,44 @@
 import {getAllApps, getAppsByName, deleteApp} from '../services/service.js'
 
 document.addEventListener("DOMContentLoaded", () => {
-  const apps = getAllApps();
-
-  showAllApps(apps);
+  getAllApps().then(res => showApps(res))
 
   document.getElementById("searchBar").addEventListener("input", (event) => {
     const searched = event.target.value;
-
-    const filtered = getAppsByName(searched);
-
-    showAllApps(filtered);
+    getAppsByName(searched).then(res => showApps(res))
   });
 });
 
-const showAllApps = (apps) => {
+const showApps = (apps) => {
   const tag = apps.map((app) => createAppRow(app)).join("");
   document.getElementById("appsContainer").innerHTML = tag;
 };
 
-const createAppRow = ({id, imageUrl, name, price, desc, companyName}) => {
+const deleteAppFromList = (id) => {
+  deleteApp(id)
+  getAllApps().then(res => showApps(res))
+}
+
+const createAppRow = ({id, imageurl, name, price, description, companyname}) => {
   let imagePositon;
 
-  if (imageUrl === "") {
+  if (imageurl === undefined || imageurl === null) {
     imagePositon = "../images/Help.png";
   } else {
-    imagePositon = `../images/${id}/${imageUrl}`;
+    imagePositon = `../images/${id}/${imageurl}`;
   }
 
-  if (companyName === "") {
-    comp = "This app does not have a company";
+  if (companyname === undefined || companyname === null){
+    companyname = "This app does not have a company";
   }
 
-  if (desc === "") {
+  if (description === undefined || description === null) {
     desc = "This app does not have description";
   }
 
+
   return `
-    <div class="col-3 float-left row">
+    <div class="col-3 float-left row" style="margin-right: 40px;>
         <div class="col-12">
             <img src="${imagePositon}" style="width: 120px">
         </div>
@@ -49,13 +50,13 @@ const createAppRow = ({id, imageUrl, name, price, desc, companyName}) => {
                 <h3>${name}</h3>
             </div>
             <div class="col-12 text-left">
-                <h5>${desc}</h5>
+                <h5>${description}</h5>
             </div>
             <div class="col-12 text-left">
                 <label>${price}$</label>
             </div>
             <div class="col-12 text-left">
-                <label>${companyName}</label>
+                <label>${companyname}</label>
             </div>
         </div>
 
@@ -67,7 +68,4 @@ const createAppRow = ({id, imageUrl, name, price, desc, companyName}) => {
     </div>`;
 };
 
-const deleteAppFromList = (id) => {
-  deleteApp(id)
-  showAllApps(apps)
-}
+

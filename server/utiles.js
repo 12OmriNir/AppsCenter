@@ -11,6 +11,7 @@ const getAppsByNameFromDB = async(tag) => {
 }
 
 const addAppToTheDB = async(values) => {
+    console.log(values)
     await executeQuery('INSERT INTO applications (id, imgUrl, name, price, description, companyname, createdat)VALUES($1,$2, $3, $4, $5, $6, $7)', values)
 }
 

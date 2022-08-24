@@ -41,9 +41,10 @@ app.delete('/api/appsCenter/:id', async(req, res) => {
     
     try{
         await deleteAppFromDB(req.params.id)
+        res.send('success!!!')
     }
     catch(e){
-        res.send('failed')
+        res.send(e)
     }
 })
 
